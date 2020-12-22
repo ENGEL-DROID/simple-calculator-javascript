@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Calculadora JavaScript</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      padding: 12%;
+      font-family: sans-serif;
+    }
+    table {
+      width: 40vw;
+      height: 40vh;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 4px 8px 30px rgba(166, 116, 209, 0.514);
+    }
+    td {
+      text-align: center;
+    }
+    input {
+      font-size: x-large;
+    }
+    input[type=button] {
+      width: 100%;
+      height: 100%;
+      background-color: rgba(252, 232, 255, 0.555);
+      border: 0px;
+    }
+    input[type=button]:hover {
+      background-color: rgba(218, 189, 223, 0.712);
+    }
+    .display {
+      color: rgb(232, 192, 255);
+      text-align: right;
+      padding-right: 5%;
+    }
+    h1 {
+      position: absolute;
+      font-size: 14vw;
+      color: rgb(252, 246, 255);
+      margin-top: -20%;
+      margin-left: -12%;
+      z-index: -1;
+    }
+    h2 {
+      position: absolute;
+      font-size: 5vw;
+      color: rgb(252, 246, 255);
+      margin-top: -25%;
+      margin-left: -10%;
+      z-index: -1;
+    }
+    h3 {
+      font-size: 1.5vw;
+      margin-top: 20%;
+      z-index: -1;
+      text-align: center;
+    }
+    a {
+      text-decoration: none;
+      color: rgb(236, 225, 241);
+    }
+  </style>
+  <script>
+    var cifra= "";
+    var acum= 0;
+    var sumar= false;
+    var restar= false;
+    var multiplicar= false;
+    var dividir= false;
+    function displayNumeros(num) {
+      document.getElementById("display").value= cifra+num;
+      cifra= document.getElementById("display").value;
+    }
+    function suma() {
+      if(restar){
+        if(acum==0){
+          acum= parseFloat(cifra);
+        } else {
+          acum= acum-parseFloat(cifra);
+        }
+      } else if(multiplicar){
+        if(acum==0){
+          acum= parseFloat(cifra);
+        } else {
+          acum= acum*parseFloat(cifra);
+        }
+      } else if(dividir){
+        if(acum==0){
+          acum= parseFloat(cifra);
+        } else {
+          acum= acum/parseFloat(cifra);
+        }
+      } else {
+        acum= acum+parseFloat(cifra);
+        document.getElementById("display").value= '+';
+      }
+      cifra= "";
+      sumar= true;
+      restar= false;
+      multiplicar= false;
+      dividir= false;
+    }
+    function resta() {
+      if(sumar){
+        acum= acum+parseFloat(cifra);
+      } else if(multiplicar){
+        if(acum==0){
+          acum= parseFloat(cifra);
+        } else {
+          acum= acum*parseFloat(cifra);
+        }
+      } else if(dividir){
+        if(acum==0){
+          acum= parseFloat(cifra);
+        } else {
+          acum= acum/parseFloat(cifra);
+        }
+      } else {
+        if(acum==0){
+          acum= parseFloat(cifra);
+        } else {
+          acum= acum-parseFloat(cifra);
+        }
+        document.getElementById("display").value= '-';
+      }
+      cifra= "";
+      restar= true;
+      sumar= false;
+      multiplicar= false;
+      dividir= false;
+    }
+    function multiplica() {
+      if(sumar){
+        acum= acum+parseFloat(cifra);
+      } else if(restar){
+        if(acum==0){
+          acum= parseFloat(cifra);
+        } else {
+          acum= acum-parseFloat(cifra);
+        }
+      } else if(dividir){
+        if(acum==0){
+          acum= parseFloat(cifra);
+        } else {
+          acum= acum/parseFloat(cifra);
+        }
+      } else {
+        if(acum==0){
+          acum= parseFloat(cifra);
+        } else {
+          acum= acum*parseFloat(cifra);
+        }
+        document.getElementById("display").value= '*';
+      }
+      cifra= "";
+      multiplicar= true;
+      restar= false;
+      sumar= false;
+      dividir= false;
+    }
+    function divide() {
+      if(sumar){
+        acum= acum+parseFloat(cifra);
+      } else if(restar){
+        if(acum==0){
+          acum= parseFloat(cifra);
+        } else {
+          acum= acum-parseFloat(cifra);
+        }
+      } else if(multiplicar){
+        if(acum==0){
+          acum= parseFloat(cifra);
+        } else {
+          acum= acum*parseFloat(cifra);
+        }
+      } else {
+        if(acum==0){
+          acum= parseFloat(cifra);
+        } else {
+          acum= acum/parseFloat(cifra);
+        }
+        document.getElementById("display").value= '/';
+      }
+      cifra= "";
+      dividir= true;
+      multiplicar= false;
+      restar= false;
+      sumar= false;
+    }
+    function igual() {
+      if(sumar){
+        acum= acum+parseFloat(cifra);
+        sumar= false;
+      } else if(restar){
+        acum= acum-parseFloat(cifra);
+        restar= false;
+      } else if(multiplicar){
+        acum= acum*parseFloat(cifra);
+        multiplicar= false;
+      } else if(dividir){
+        acum= acum/parseFloat(cifra);
+        dividir= false;
+      }
+      document.getElementById("display").value= acum;
+      cifra= 0;
+    }
+    function limpiar() {
+      document.getElementById("display").value= 0;
+      acum= 0;
+      cifra= "";
+    }
+  </script>
+</head>
+<body>
+<table width="200" border="1">
+  <tbody>
+    <tr>
+      <td colspan="4" style="text-align: center; height: 10vh;">
+        <input type="text" id="display" class="display" style="width: 94%; height: 100%; background-color: rgb(48, 26, 59);">
+      </td>
+    </tr>
+    <tr>
+      <td><input type="button" id="button" value="+" onclick="suma()"></td>
+      <td><input type="button" id="button2" value="-" onclick="resta()"></td>
+      <td><input type="button" id="button3" value="*" onclick="multiplica()"></td>
+      <td><input type="button" id="button4" value="/" onclick="divide()"></td>
+    </tr>
+    <tr>
+      <td><input type="button" id="num7" value="7" onclick="displayNumeros(7)"></td>
+      <td><input type="button" id="num8" value="8" onclick="displayNumeros(8)"></td>
+      <td><input type="button" id="num9" value="9" onclick="displayNumeros(9)"></td>
+      <td><input type="button" id="num" value=""></td>
+    </tr>
+    <tr>
+      <td><input type="button" id="num4" value="4" onclick="displayNumeros(4)"></td>
+      <td><input type="button" id="num5" value="5" onclick="displayNumeros(5)"></td>
+      <td><input type="button" id="num6" value="6" onclick="displayNumeros(6)"></td>
+      <td><input type="button" id="num" value=""></td>
+    </tr>
+    <tr>
+      <td><input type="button" id="num1" value="1" onclick="displayNumeros(1)"></td>
+      <td><input type="button" id="num2" value="2" onclick="displayNumeros(2)"></td>
+      <td><input type="button" id="num3" value="3" onclick="displayNumeros(3)"></td>
+      <td><input type="button" id="num" value="C" onclick="limpiar()"></td>
+    </tr>
+    <tr>
+      <td><input type="button" id="num0" value="0" onclick="displayNumeros(0)"></td>
+      <td><input type="button" id="button17" value="." onclick="displayNumeros('.')"></td>
+      <td colspan="2"><input type="button" id="button12" value="=" onclick="igual()"></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>SIMPLE</h2>
+<h1>CALCULATOR</h1>
+<h3> <a href="https://github.com/ENGEL-DROID" target="_blank">By: @EngelberthRB</a> </h3>
+
+</body>
+
+<script>
+  document.getElementById("display").value=0;
+</script>
+
+</html>
